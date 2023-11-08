@@ -1,39 +1,42 @@
-CREATE TABLE Country(
-    id int NOT NULL AUTO_INCREMENT,
-    Name varchar(50) NOT NULL
+CREATE TABLE Country (
+    Id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(50) NOT NULL
 );
 CREATE TABLE State(
-    id int NOT NULL AUTO_INCREMENT,
-    Name varchar(50) NOT NULL,
-    IdCountryFk int NOT NULL,
-    CONSTRAIN StateFk PRIMARY KEY(id),
-    CONSTRAIN City_Fk FOREING KEY (IdCountryFk) REFERENCES City(id)
+    Id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(50),
+    IdcountryFk int NOT NULL,
+    KEY IX_state_IdcountryFk (IdcountryFk),
+    CONSTRAINT FK_state_country_IdcountryFk FOREIGN KEY (IdcountryFk) REFERENCES country (Id)
 );
-
 CREATE TABLE City(
-    id int NOT NULL AUTO_INCREMENT,
-    Name varchar(25) NOT NULL,
-    IdstateFk INT NOT NULL,
-    CONSTRAIN City_Fk PRIMARY KEY (id),
-    CONSTRAIN State_Fk FOREING KEY (IdstateFk) REFERENCES State(id)
+    Id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    name varchar(50) NOT NULL,
+    IdStateFk int NOT NULL,
+    KEY IX_City_IdstateFk (IdstateFk),
+    CONSTRAINT FK_City_State_IdstateFk FOREIGN KEY (IdstateFk) REFERENCES state (Id)
 );
 
 CREATE TABLE PersonType(
-    id int NOT NULL AUTO_INCREMENT,
-    Name varchar(50) NOT NULL
+    Id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    name varchar(50) NOT NULL
 );
 
-CREATE TABLE Customer(
-    id int NOT NULL AUTO_INCREMENT,
-    Name varchar(50) NOT NULL,
-    IdCustomer varchar(255) NOT NULL UNIQUE,
-    IdPersonTypeFk int(11) NOT NULL,
-    IdCityFk int(11) NOT NULL
-    DATER_REGISTER DATE NOT NULL,
-    CONSTRAIN CustomerFk PRIMARY KEY(id),
-    CONSTRAIN City_Fk FOREING KEY (IdCityFk) REFERENCES City(id),
-    CONSTRAIN PersonTypeFk FOREING KEY (IdPersonTypeFk) REFERENCES PersonType(id)
+CREATE TABLE Costumer(
+    Id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    name varchar(50) NOT NULL,
+    IdCustomer varchar(255) NOT NULL,
+    IdPersonTypeFk int NOT NULL,
+    date_register date NOT NULL,
+    IdCityFk int NOT NULL,
+    KEY IX_Customer_IdCustomer (IdCustomer),
+    KEY IX_customer_IdcityFk (IdcityFk),
+    KEY IX_customer_IdPersonTypeFk (IdPersonTypeFk),
+    CONSTRAINT FK_Customer_IdCustomer UNIQUE KEY U_IdCustomer (IdCustomer),
+    CONSTRAINT FK_customer_city_IdcityFk FOREIGN KEY (IdcityFk) REFERENCES city (Id),
+    CONSTRAINT FK_customer_PersonType_IdPersonTypeFk FOREIGN KEY (IdPersonTypeFk) REFERENCES PersonType (Id)
 );
+
 
 
 
